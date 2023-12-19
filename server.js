@@ -12,10 +12,13 @@ const image  = require('./controlers/image')
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : '',
-      database : 'smart-brain'
+      connectionString : process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false},
+      host : process.env.DATABASE_HOST,
+      port: 5432,
+      user : process.env.DATABASE_USER,
+      password : process.env.DATABASE_PW,
+      database : process.env.DATABASE_DB
     }
   });
 
@@ -29,7 +32,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.get('/', (req, res)=> {res.send(database.users)})
+app.get('/', (req, res)=> {res.send(db.users)})
 app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)})
                                                                    //this is called dependency injection we're injecting whatever dependencies
 app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)})
