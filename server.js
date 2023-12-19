@@ -33,7 +33,7 @@ app.use(cors());
 
 
 app.get('/', (req, res)=> {res.send(db.users)})
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)})
+app.post('/signin', (req, res) => { signin.handleSignin(db, bcrypt)})
                                                                    //this is called dependency injection we're injecting whatever dependencies
 app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)})
 app.get('/profile/:id', (req, res) => {profile.handleProfileGet(req, res, db)})
