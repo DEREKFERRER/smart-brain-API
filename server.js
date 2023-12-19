@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 
-const register = require('./controlers/register')
-const signin  = require('./controlers/signin')
-const profile  = require('./controlers/profile')
-const image  = require('./controlers/image')
+const register = require('./controlers/register');
+const signin  = require('./controlers/signin');
+const profile  = require('./controlers/profile');
+const image  = require('./controlers/image');
 
 const db = knex({
     client: 'pg',
@@ -33,7 +33,7 @@ app.use(cors());
 
 
 app.get('/', (req, res)=> {res.send(db.users)})
-app.post('/signin', (req, res) => { signin.handleSignin(db, bcrypt)})
+app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)})
                                                                    //this is called dependency injection we're injecting whatever dependencies
 app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)})
 app.get('/profile/:id', (req, res) => {profile.handleProfileGet(req, res, db)})
